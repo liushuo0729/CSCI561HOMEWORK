@@ -55,6 +55,27 @@ def moveInward(root):
         moveInward(root.left)
         moveInward(root.right)
 
+def distribute(root):
+    result = []
+    if not root.left:
+        result.append(root)
+    else:
+        if root.relation == 'AND':
+            result = distribute(root.left)+distribute(root.right)
+        elif root.relation == 'OR':
+            resultLeft = distribute(root.left)
+            resultRight = distribute(root.right)
+            for leftElement in resultLeft:
+                for rightElement in resultRight:
+                    tmp = TreeNode()
+                    tmp.relation = 'OR'
+                    tmp.left = leftElement
+                    tmp.right = rightElement
+                    result.append(tmp)
+    return result
+
+
+
 
 
 if sys.version_info[0] >= 3:  
@@ -103,16 +124,22 @@ precedence = (
 # dictionary of names  
 names = { }  
 
+kb = []
 root = TreeNode()
 
 def p_statement(p):
     'statement : sentence'
     root = p[1]
-    printTree(root,0)
+    #printTree(root,0)
     eliminateImpl(root)
-    printTree(root,0)
+    #printTree(root,0)
     moveInward(root)
-    printTree(root,0)
+    #printTree(root,0)
+    global kb
+    kb+=distribute(root)
+    for s in kb:
+        print ("SENTENCE-------------------")
+        printTree(s,0)
 
 def p_sentence_assign(p):  
     '''sentence : atomsentence
