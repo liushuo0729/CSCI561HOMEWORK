@@ -2,409 +2,420 @@ Created by PLY version 3.9 (http://www.dabeaz.com/ply)
 
 Grammar
 
-Rule 0     S' -> sentence
-Rule 1     sentence -> atomsentence
-Rule 2     sentence -> complexsentence
-Rule 3     complexsentence -> ( sentence )
-Rule 4     complexsentence -> ~ sentence
-Rule 5     complexsentence -> sentence | sentence
-Rule 6     complexsentence -> sentence & sentence
-Rule 7     complexsentence -> sentence ENTAIL sentence
-Rule 8     predicate -> NAME
-Rule 9     atomsentence -> predicate ( terms )
-Rule 10    terms -> term
-Rule 11    terms -> term , terms
-Rule 12    term -> constant
-Rule 13    term -> VARIABLE
-Rule 14    constant -> NAME
+Rule 0     S' -> statement
+Rule 1     statement -> sentence
+Rule 2     sentence -> atomsentence
+Rule 3     sentence -> complexsentence
+Rule 4     complexsentence -> ( sentence )
+Rule 5     complexsentence -> ~ sentence
+Rule 6     complexsentence -> sentence | sentence
+Rule 7     complexsentence -> sentence & sentence
+Rule 8     complexsentence -> sentence IMPLY sentence
+Rule 9     predicate -> NAME
+Rule 10    atomsentence -> predicate ( terms )
+Rule 11    terms -> term
+Rule 12    terms -> term , terms
+Rule 13    term -> constant
+Rule 14    term -> VARIABLE
+Rule 15    constant -> NAME
 
 Terminals, with rules where they appear
 
-&                    : 6
-(                    : 3 9
-)                    : 3 9
-,                    : 11
-ENTAIL               : 7
-NAME                 : 8 14
-VARIABLE             : 13
+&                    : 7
+(                    : 4 10
+)                    : 4 10
+,                    : 12
+IMPLY                : 8
+NAME                 : 9 15
+VARIABLE             : 14
 error                : 
-|                    : 5
-~                    : 4
+|                    : 6
+~                    : 5
 
 Nonterminals, with rules where they appear
 
-atomsentence         : 1
-complexsentence      : 2
-constant             : 12
-predicate            : 9
-sentence             : 3 4 5 5 6 6 7 7 0
-term                 : 10 11
-terms                : 9 11
+atomsentence         : 2
+complexsentence      : 3
+constant             : 13
+predicate            : 10
+sentence             : 1 4 5 6 6 7 7 8 8
+statement            : 0
+term                 : 11 12
+terms                : 10 12
 
 Parsing method: LALR
 
 state 0
 
-    (0) S' -> . sentence
-    (1) sentence -> . atomsentence
-    (2) sentence -> . complexsentence
-    (9) atomsentence -> . predicate ( terms )
-    (3) complexsentence -> . ( sentence )
-    (4) complexsentence -> . ~ sentence
-    (5) complexsentence -> . sentence | sentence
-    (6) complexsentence -> . sentence & sentence
-    (7) complexsentence -> . sentence ENTAIL sentence
-    (8) predicate -> . NAME
+    (0) S' -> . statement
+    (1) statement -> . sentence
+    (2) sentence -> . atomsentence
+    (3) sentence -> . complexsentence
+    (10) atomsentence -> . predicate ( terms )
+    (4) complexsentence -> . ( sentence )
+    (5) complexsentence -> . ~ sentence
+    (6) complexsentence -> . sentence | sentence
+    (7) complexsentence -> . sentence & sentence
+    (8) complexsentence -> . sentence IMPLY sentence
+    (9) predicate -> . NAME
 
-    (               shift and go to state 3
-    ~               shift and go to state 1
-    NAME            shift and go to state 6
+    (               shift and go to state 2
+    ~               shift and go to state 6
+    NAME            shift and go to state 5
 
-    atomsentence                   shift and go to state 7
-    complexsentence                shift and go to state 2
-    predicate                      shift and go to state 5
-    sentence                       shift and go to state 4
+    predicate                      shift and go to state 7
+    sentence                       shift and go to state 1
+    complexsentence                shift and go to state 3
+    statement                      shift and go to state 4
+    atomsentence                   shift and go to state 8
 
 state 1
 
-    (4) complexsentence -> ~ . sentence
-    (1) sentence -> . atomsentence
-    (2) sentence -> . complexsentence
-    (9) atomsentence -> . predicate ( terms )
-    (3) complexsentence -> . ( sentence )
-    (4) complexsentence -> . ~ sentence
-    (5) complexsentence -> . sentence | sentence
-    (6) complexsentence -> . sentence & sentence
-    (7) complexsentence -> . sentence ENTAIL sentence
-    (8) predicate -> . NAME
+    (1) statement -> sentence .
+    (6) complexsentence -> sentence . | sentence
+    (7) complexsentence -> sentence . & sentence
+    (8) complexsentence -> sentence . IMPLY sentence
 
-    (               shift and go to state 3
-    ~               shift and go to state 1
-    NAME            shift and go to state 6
+    $end            reduce using rule 1 (statement -> sentence .)
+    |               shift and go to state 9
+    &               shift and go to state 11
+    IMPLY           shift and go to state 10
 
-    atomsentence                   shift and go to state 7
-    complexsentence                shift and go to state 2
-    predicate                      shift and go to state 5
-    sentence                       shift and go to state 8
 
 state 2
 
-    (2) sentence -> complexsentence .
+    (4) complexsentence -> ( . sentence )
+    (2) sentence -> . atomsentence
+    (3) sentence -> . complexsentence
+    (10) atomsentence -> . predicate ( terms )
+    (4) complexsentence -> . ( sentence )
+    (5) complexsentence -> . ~ sentence
+    (6) complexsentence -> . sentence | sentence
+    (7) complexsentence -> . sentence & sentence
+    (8) complexsentence -> . sentence IMPLY sentence
+    (9) predicate -> . NAME
 
-    |               reduce using rule 2 (sentence -> complexsentence .)
-    &               reduce using rule 2 (sentence -> complexsentence .)
-    ENTAIL          reduce using rule 2 (sentence -> complexsentence .)
-    $end            reduce using rule 2 (sentence -> complexsentence .)
-    )               reduce using rule 2 (sentence -> complexsentence .)
+    (               shift and go to state 2
+    ~               shift and go to state 6
+    NAME            shift and go to state 5
 
+    predicate                      shift and go to state 7
+    sentence                       shift and go to state 12
+    atomsentence                   shift and go to state 8
+    complexsentence                shift and go to state 3
 
 state 3
 
-    (3) complexsentence -> ( . sentence )
-    (1) sentence -> . atomsentence
-    (2) sentence -> . complexsentence
-    (9) atomsentence -> . predicate ( terms )
-    (3) complexsentence -> . ( sentence )
-    (4) complexsentence -> . ~ sentence
-    (5) complexsentence -> . sentence | sentence
-    (6) complexsentence -> . sentence & sentence
-    (7) complexsentence -> . sentence ENTAIL sentence
-    (8) predicate -> . NAME
+    (3) sentence -> complexsentence .
 
-    (               shift and go to state 3
-    ~               shift and go to state 1
-    NAME            shift and go to state 6
+    |               reduce using rule 3 (sentence -> complexsentence .)
+    &               reduce using rule 3 (sentence -> complexsentence .)
+    IMPLY           reduce using rule 3 (sentence -> complexsentence .)
+    $end            reduce using rule 3 (sentence -> complexsentence .)
+    )               reduce using rule 3 (sentence -> complexsentence .)
 
-    atomsentence                   shift and go to state 7
-    complexsentence                shift and go to state 2
-    predicate                      shift and go to state 5
-    sentence                       shift and go to state 9
 
 state 4
 
-    (0) S' -> sentence .
-    (5) complexsentence -> sentence . | sentence
-    (6) complexsentence -> sentence . & sentence
-    (7) complexsentence -> sentence . ENTAIL sentence
+    (0) S' -> statement .
 
-    |               shift and go to state 11
-    &               shift and go to state 12
-    ENTAIL          shift and go to state 10
 
 
 state 5
 
-    (9) atomsentence -> predicate . ( terms )
+    (9) predicate -> NAME .
 
-    (               shift and go to state 13
+    (               reduce using rule 9 (predicate -> NAME .)
 
 
 state 6
 
-    (8) predicate -> NAME .
+    (5) complexsentence -> ~ . sentence
+    (2) sentence -> . atomsentence
+    (3) sentence -> . complexsentence
+    (10) atomsentence -> . predicate ( terms )
+    (4) complexsentence -> . ( sentence )
+    (5) complexsentence -> . ~ sentence
+    (6) complexsentence -> . sentence | sentence
+    (7) complexsentence -> . sentence & sentence
+    (8) complexsentence -> . sentence IMPLY sentence
+    (9) predicate -> . NAME
 
-    (               reduce using rule 8 (predicate -> NAME .)
+    (               shift and go to state 2
+    ~               shift and go to state 6
+    NAME            shift and go to state 5
 
+    predicate                      shift and go to state 7
+    sentence                       shift and go to state 13
+    atomsentence                   shift and go to state 8
+    complexsentence                shift and go to state 3
 
 state 7
 
-    (1) sentence -> atomsentence .
+    (10) atomsentence -> predicate . ( terms )
 
-    |               reduce using rule 1 (sentence -> atomsentence .)
-    &               reduce using rule 1 (sentence -> atomsentence .)
-    ENTAIL          reduce using rule 1 (sentence -> atomsentence .)
-    $end            reduce using rule 1 (sentence -> atomsentence .)
-    )               reduce using rule 1 (sentence -> atomsentence .)
+    (               shift and go to state 14
 
 
 state 8
 
-    (4) complexsentence -> ~ sentence .
-    (5) complexsentence -> sentence . | sentence
-    (6) complexsentence -> sentence . & sentence
-    (7) complexsentence -> sentence . ENTAIL sentence
+    (2) sentence -> atomsentence .
 
-    |               reduce using rule 4 (complexsentence -> ~ sentence .)
-    &               reduce using rule 4 (complexsentence -> ~ sentence .)
-    ENTAIL          reduce using rule 4 (complexsentence -> ~ sentence .)
-    $end            reduce using rule 4 (complexsentence -> ~ sentence .)
-    )               reduce using rule 4 (complexsentence -> ~ sentence .)
-
-  ! |               [ shift and go to state 11 ]
-  ! &               [ shift and go to state 12 ]
-  ! ENTAIL          [ shift and go to state 10 ]
+    |               reduce using rule 2 (sentence -> atomsentence .)
+    &               reduce using rule 2 (sentence -> atomsentence .)
+    IMPLY           reduce using rule 2 (sentence -> atomsentence .)
+    $end            reduce using rule 2 (sentence -> atomsentence .)
+    )               reduce using rule 2 (sentence -> atomsentence .)
 
 
 state 9
 
-    (3) complexsentence -> ( sentence . )
-    (5) complexsentence -> sentence . | sentence
-    (6) complexsentence -> sentence . & sentence
-    (7) complexsentence -> sentence . ENTAIL sentence
+    (6) complexsentence -> sentence | . sentence
+    (2) sentence -> . atomsentence
+    (3) sentence -> . complexsentence
+    (10) atomsentence -> . predicate ( terms )
+    (4) complexsentence -> . ( sentence )
+    (5) complexsentence -> . ~ sentence
+    (6) complexsentence -> . sentence | sentence
+    (7) complexsentence -> . sentence & sentence
+    (8) complexsentence -> . sentence IMPLY sentence
+    (9) predicate -> . NAME
 
-    )               shift and go to state 14
-    |               shift and go to state 11
-    &               shift and go to state 12
-    ENTAIL          shift and go to state 10
+    (               shift and go to state 2
+    ~               shift and go to state 6
+    NAME            shift and go to state 5
 
+    predicate                      shift and go to state 7
+    sentence                       shift and go to state 15
+    atomsentence                   shift and go to state 8
+    complexsentence                shift and go to state 3
 
 state 10
 
-    (7) complexsentence -> sentence ENTAIL . sentence
-    (1) sentence -> . atomsentence
-    (2) sentence -> . complexsentence
-    (9) atomsentence -> . predicate ( terms )
-    (3) complexsentence -> . ( sentence )
-    (4) complexsentence -> . ~ sentence
-    (5) complexsentence -> . sentence | sentence
-    (6) complexsentence -> . sentence & sentence
-    (7) complexsentence -> . sentence ENTAIL sentence
-    (8) predicate -> . NAME
+    (8) complexsentence -> sentence IMPLY . sentence
+    (2) sentence -> . atomsentence
+    (3) sentence -> . complexsentence
+    (10) atomsentence -> . predicate ( terms )
+    (4) complexsentence -> . ( sentence )
+    (5) complexsentence -> . ~ sentence
+    (6) complexsentence -> . sentence | sentence
+    (7) complexsentence -> . sentence & sentence
+    (8) complexsentence -> . sentence IMPLY sentence
+    (9) predicate -> . NAME
 
-    (               shift and go to state 3
-    ~               shift and go to state 1
-    NAME            shift and go to state 6
+    (               shift and go to state 2
+    ~               shift and go to state 6
+    NAME            shift and go to state 5
 
-    atomsentence                   shift and go to state 7
-    complexsentence                shift and go to state 2
-    predicate                      shift and go to state 5
-    sentence                       shift and go to state 15
+    predicate                      shift and go to state 7
+    sentence                       shift and go to state 16
+    atomsentence                   shift and go to state 8
+    complexsentence                shift and go to state 3
 
 state 11
 
-    (5) complexsentence -> sentence | . sentence
-    (1) sentence -> . atomsentence
-    (2) sentence -> . complexsentence
-    (9) atomsentence -> . predicate ( terms )
-    (3) complexsentence -> . ( sentence )
-    (4) complexsentence -> . ~ sentence
-    (5) complexsentence -> . sentence | sentence
-    (6) complexsentence -> . sentence & sentence
-    (7) complexsentence -> . sentence ENTAIL sentence
-    (8) predicate -> . NAME
+    (7) complexsentence -> sentence & . sentence
+    (2) sentence -> . atomsentence
+    (3) sentence -> . complexsentence
+    (10) atomsentence -> . predicate ( terms )
+    (4) complexsentence -> . ( sentence )
+    (5) complexsentence -> . ~ sentence
+    (6) complexsentence -> . sentence | sentence
+    (7) complexsentence -> . sentence & sentence
+    (8) complexsentence -> . sentence IMPLY sentence
+    (9) predicate -> . NAME
 
-    (               shift and go to state 3
-    ~               shift and go to state 1
-    NAME            shift and go to state 6
+    (               shift and go to state 2
+    ~               shift and go to state 6
+    NAME            shift and go to state 5
 
-    atomsentence                   shift and go to state 7
-    complexsentence                shift and go to state 2
-    predicate                      shift and go to state 5
-    sentence                       shift and go to state 16
+    predicate                      shift and go to state 7
+    sentence                       shift and go to state 17
+    atomsentence                   shift and go to state 8
+    complexsentence                shift and go to state 3
 
 state 12
 
-    (6) complexsentence -> sentence & . sentence
-    (1) sentence -> . atomsentence
-    (2) sentence -> . complexsentence
-    (9) atomsentence -> . predicate ( terms )
-    (3) complexsentence -> . ( sentence )
-    (4) complexsentence -> . ~ sentence
-    (5) complexsentence -> . sentence | sentence
-    (6) complexsentence -> . sentence & sentence
-    (7) complexsentence -> . sentence ENTAIL sentence
-    (8) predicate -> . NAME
+    (4) complexsentence -> ( sentence . )
+    (6) complexsentence -> sentence . | sentence
+    (7) complexsentence -> sentence . & sentence
+    (8) complexsentence -> sentence . IMPLY sentence
 
-    (               shift and go to state 3
-    ~               shift and go to state 1
-    NAME            shift and go to state 6
+    )               shift and go to state 18
+    |               shift and go to state 9
+    &               shift and go to state 11
+    IMPLY           shift and go to state 10
 
-    atomsentence                   shift and go to state 7
-    complexsentence                shift and go to state 2
-    predicate                      shift and go to state 5
-    sentence                       shift and go to state 17
 
 state 13
 
-    (9) atomsentence -> predicate ( . terms )
-    (10) terms -> . term
-    (11) terms -> . term , terms
-    (12) term -> . constant
-    (13) term -> . VARIABLE
-    (14) constant -> . NAME
+    (5) complexsentence -> ~ sentence .
+    (6) complexsentence -> sentence . | sentence
+    (7) complexsentence -> sentence . & sentence
+    (8) complexsentence -> sentence . IMPLY sentence
 
-    VARIABLE        shift and go to state 20
-    NAME            shift and go to state 22
+    |               reduce using rule 5 (complexsentence -> ~ sentence .)
+    &               reduce using rule 5 (complexsentence -> ~ sentence .)
+    IMPLY           reduce using rule 5 (complexsentence -> ~ sentence .)
+    $end            reduce using rule 5 (complexsentence -> ~ sentence .)
+    )               reduce using rule 5 (complexsentence -> ~ sentence .)
 
-    term                           shift and go to state 18
-    terms                          shift and go to state 19
-    constant                       shift and go to state 21
+  ! |               [ shift and go to state 9 ]
+  ! &               [ shift and go to state 11 ]
+  ! IMPLY           [ shift and go to state 10 ]
+
 
 state 14
 
-    (3) complexsentence -> ( sentence ) .
+    (10) atomsentence -> predicate ( . terms )
+    (11) terms -> . term
+    (12) terms -> . term , terms
+    (13) term -> . constant
+    (14) term -> . VARIABLE
+    (15) constant -> . NAME
 
-    |               reduce using rule 3 (complexsentence -> ( sentence ) .)
-    &               reduce using rule 3 (complexsentence -> ( sentence ) .)
-    ENTAIL          reduce using rule 3 (complexsentence -> ( sentence ) .)
-    $end            reduce using rule 3 (complexsentence -> ( sentence ) .)
-    )               reduce using rule 3 (complexsentence -> ( sentence ) .)
+    VARIABLE        shift and go to state 21
+    NAME            shift and go to state 22
 
+    constant                       shift and go to state 19
+    terms                          shift and go to state 20
+    term                           shift and go to state 23
 
 state 15
 
-    (7) complexsentence -> sentence ENTAIL sentence .
-    (5) complexsentence -> sentence . | sentence
-    (6) complexsentence -> sentence . & sentence
-    (7) complexsentence -> sentence . ENTAIL sentence
+    (6) complexsentence -> sentence | sentence .
+    (6) complexsentence -> sentence . | sentence
+    (7) complexsentence -> sentence . & sentence
+    (8) complexsentence -> sentence . IMPLY sentence
 
-    ENTAIL          reduce using rule 7 (complexsentence -> sentence ENTAIL sentence .)
-    $end            reduce using rule 7 (complexsentence -> sentence ENTAIL sentence .)
-    )               reduce using rule 7 (complexsentence -> sentence ENTAIL sentence .)
-    |               shift and go to state 11
-    &               shift and go to state 12
+    |               reduce using rule 6 (complexsentence -> sentence | sentence .)
+    &               reduce using rule 6 (complexsentence -> sentence | sentence .)
+    IMPLY           reduce using rule 6 (complexsentence -> sentence | sentence .)
+    $end            reduce using rule 6 (complexsentence -> sentence | sentence .)
+    )               reduce using rule 6 (complexsentence -> sentence | sentence .)
 
-  ! |               [ reduce using rule 7 (complexsentence -> sentence ENTAIL sentence .) ]
-  ! &               [ reduce using rule 7 (complexsentence -> sentence ENTAIL sentence .) ]
-  ! ENTAIL          [ shift and go to state 10 ]
+  ! |               [ shift and go to state 9 ]
+  ! &               [ shift and go to state 11 ]
+  ! IMPLY           [ shift and go to state 10 ]
 
 
 state 16
 
-    (5) complexsentence -> sentence | sentence .
-    (5) complexsentence -> sentence . | sentence
-    (6) complexsentence -> sentence . & sentence
-    (7) complexsentence -> sentence . ENTAIL sentence
+    (8) complexsentence -> sentence IMPLY sentence .
+    (6) complexsentence -> sentence . | sentence
+    (7) complexsentence -> sentence . & sentence
+    (8) complexsentence -> sentence . IMPLY sentence
 
-    |               reduce using rule 5 (complexsentence -> sentence | sentence .)
-    &               reduce using rule 5 (complexsentence -> sentence | sentence .)
-    ENTAIL          reduce using rule 5 (complexsentence -> sentence | sentence .)
-    $end            reduce using rule 5 (complexsentence -> sentence | sentence .)
-    )               reduce using rule 5 (complexsentence -> sentence | sentence .)
+    IMPLY           reduce using rule 8 (complexsentence -> sentence IMPLY sentence .)
+    $end            reduce using rule 8 (complexsentence -> sentence IMPLY sentence .)
+    )               reduce using rule 8 (complexsentence -> sentence IMPLY sentence .)
+    |               shift and go to state 9
+    &               shift and go to state 11
 
-  ! |               [ shift and go to state 11 ]
-  ! &               [ shift and go to state 12 ]
-  ! ENTAIL          [ shift and go to state 10 ]
+  ! |               [ reduce using rule 8 (complexsentence -> sentence IMPLY sentence .) ]
+  ! &               [ reduce using rule 8 (complexsentence -> sentence IMPLY sentence .) ]
+  ! IMPLY           [ shift and go to state 10 ]
 
 
 state 17
 
-    (6) complexsentence -> sentence & sentence .
-    (5) complexsentence -> sentence . | sentence
-    (6) complexsentence -> sentence . & sentence
-    (7) complexsentence -> sentence . ENTAIL sentence
+    (7) complexsentence -> sentence & sentence .
+    (6) complexsentence -> sentence . | sentence
+    (7) complexsentence -> sentence . & sentence
+    (8) complexsentence -> sentence . IMPLY sentence
 
-    |               reduce using rule 6 (complexsentence -> sentence & sentence .)
-    &               reduce using rule 6 (complexsentence -> sentence & sentence .)
-    ENTAIL          reduce using rule 6 (complexsentence -> sentence & sentence .)
-    $end            reduce using rule 6 (complexsentence -> sentence & sentence .)
-    )               reduce using rule 6 (complexsentence -> sentence & sentence .)
+    |               reduce using rule 7 (complexsentence -> sentence & sentence .)
+    &               reduce using rule 7 (complexsentence -> sentence & sentence .)
+    IMPLY           reduce using rule 7 (complexsentence -> sentence & sentence .)
+    $end            reduce using rule 7 (complexsentence -> sentence & sentence .)
+    )               reduce using rule 7 (complexsentence -> sentence & sentence .)
 
-  ! |               [ shift and go to state 11 ]
-  ! &               [ shift and go to state 12 ]
-  ! ENTAIL          [ shift and go to state 10 ]
+  ! |               [ shift and go to state 9 ]
+  ! &               [ shift and go to state 11 ]
+  ! IMPLY           [ shift and go to state 10 ]
 
 
 state 18
 
-    (10) terms -> term .
-    (11) terms -> term . , terms
+    (4) complexsentence -> ( sentence ) .
 
-    )               reduce using rule 10 (terms -> term .)
-    ,               shift and go to state 23
+    |               reduce using rule 4 (complexsentence -> ( sentence ) .)
+    &               reduce using rule 4 (complexsentence -> ( sentence ) .)
+    IMPLY           reduce using rule 4 (complexsentence -> ( sentence ) .)
+    $end            reduce using rule 4 (complexsentence -> ( sentence ) .)
+    )               reduce using rule 4 (complexsentence -> ( sentence ) .)
 
 
 state 19
 
-    (9) atomsentence -> predicate ( terms . )
+    (13) term -> constant .
 
-    )               shift and go to state 24
+    ,               reduce using rule 13 (term -> constant .)
+    )               reduce using rule 13 (term -> constant .)
 
 
 state 20
 
-    (13) term -> VARIABLE .
+    (10) atomsentence -> predicate ( terms . )
 
-    ,               reduce using rule 13 (term -> VARIABLE .)
-    )               reduce using rule 13 (term -> VARIABLE .)
+    )               shift and go to state 24
 
 
 state 21
 
-    (12) term -> constant .
+    (14) term -> VARIABLE .
 
-    ,               reduce using rule 12 (term -> constant .)
-    )               reduce using rule 12 (term -> constant .)
+    ,               reduce using rule 14 (term -> VARIABLE .)
+    )               reduce using rule 14 (term -> VARIABLE .)
 
 
 state 22
 
-    (14) constant -> NAME .
+    (15) constant -> NAME .
 
-    ,               reduce using rule 14 (constant -> NAME .)
-    )               reduce using rule 14 (constant -> NAME .)
+    ,               reduce using rule 15 (constant -> NAME .)
+    )               reduce using rule 15 (constant -> NAME .)
 
 
 state 23
 
-    (11) terms -> term , . terms
-    (10) terms -> . term
-    (11) terms -> . term , terms
-    (12) term -> . constant
-    (13) term -> . VARIABLE
-    (14) constant -> . NAME
+    (11) terms -> term .
+    (12) terms -> term . , terms
 
-    VARIABLE        shift and go to state 20
-    NAME            shift and go to state 22
+    )               reduce using rule 11 (terms -> term .)
+    ,               shift and go to state 25
 
-    term                           shift and go to state 18
-    terms                          shift and go to state 25
-    constant                       shift and go to state 21
 
 state 24
 
-    (9) atomsentence -> predicate ( terms ) .
+    (10) atomsentence -> predicate ( terms ) .
 
-    |               reduce using rule 9 (atomsentence -> predicate ( terms ) .)
-    &               reduce using rule 9 (atomsentence -> predicate ( terms ) .)
-    ENTAIL          reduce using rule 9 (atomsentence -> predicate ( terms ) .)
-    $end            reduce using rule 9 (atomsentence -> predicate ( terms ) .)
-    )               reduce using rule 9 (atomsentence -> predicate ( terms ) .)
+    |               reduce using rule 10 (atomsentence -> predicate ( terms ) .)
+    &               reduce using rule 10 (atomsentence -> predicate ( terms ) .)
+    IMPLY           reduce using rule 10 (atomsentence -> predicate ( terms ) .)
+    $end            reduce using rule 10 (atomsentence -> predicate ( terms ) .)
+    )               reduce using rule 10 (atomsentence -> predicate ( terms ) .)
 
 
 state 25
 
-    (11) terms -> term , terms .
+    (12) terms -> term , . terms
+    (11) terms -> . term
+    (12) terms -> . term , terms
+    (13) term -> . constant
+    (14) term -> . VARIABLE
+    (15) constant -> . NAME
 
-    )               reduce using rule 11 (terms -> term , terms .)
+    VARIABLE        shift and go to state 21
+    NAME            shift and go to state 22
+
+    constant                       shift and go to state 19
+    terms                          shift and go to state 26
+    term                           shift and go to state 23
+
+state 26
+
+    (12) terms -> term , terms .
+
+    )               reduce using rule 12 (terms -> term , terms .)
 

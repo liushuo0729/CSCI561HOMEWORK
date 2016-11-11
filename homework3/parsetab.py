@@ -5,9 +5,9 @@ _tabversion = '3.8'
 
 _lr_method = 'LALR'
 
-_lr_signature = '0069D8A70B11215CC42661E5F7E0FDF9'
+_lr_signature = 'F923A988938E4DF202772034B10024C8'
     
-_lr_action_items = {'$end':([2,4,7,8,14,15,16,17,24,],[-2,0,-1,-4,-3,-7,-5,-6,-9,]),'~':([0,1,3,10,11,12,],[1,1,1,1,1,1,]),')':([2,7,8,9,14,15,16,17,18,19,20,21,22,24,25,],[-2,-1,-4,14,-3,-7,-5,-6,-10,24,-13,-12,-14,-9,-11,]),'(':([0,1,3,5,6,10,11,12,],[3,3,3,13,-8,3,3,3,]),'&':([2,4,7,8,9,14,15,16,17,24,],[-2,12,-1,-4,12,-3,12,-5,-6,-9,]),'ENTAIL':([2,4,7,8,9,14,15,16,17,24,],[-2,10,-1,-4,10,-3,-7,-5,-6,-9,]),'|':([2,4,7,8,9,14,15,16,17,24,],[-2,11,-1,-4,11,-3,11,-5,-6,-9,]),',':([18,20,21,22,],[23,-13,-12,-14,]),'VARIABLE':([13,23,],[20,20,]),'NAME':([0,1,3,10,11,12,13,23,],[6,6,6,6,6,6,22,22,]),}
+_lr_action_items = {'NAME':([0,2,6,9,10,11,14,25,],[5,5,5,5,5,5,22,22,]),')':([3,8,12,13,15,16,17,18,19,20,21,22,23,24,26,],[-3,-2,18,-5,-6,-8,-7,-4,-13,24,-14,-15,-11,-10,-12,]),'|':([1,3,8,12,13,15,16,17,18,24,],[9,-3,-2,9,-5,-6,9,-7,-4,-10,]),'(':([0,2,5,6,7,9,10,11,],[2,2,-9,2,14,2,2,2,]),'VARIABLE':([14,25,],[21,21,]),'$end':([1,3,4,8,13,15,16,17,18,24,],[-1,-3,0,-2,-5,-6,-8,-7,-4,-10,]),'IMPLY':([1,3,8,12,13,15,16,17,18,24,],[10,-3,-2,10,-5,-6,-8,-7,-4,-10,]),'~':([0,2,6,9,10,11,],[6,6,6,6,6,6,]),'&':([1,3,8,12,13,15,16,17,18,24,],[11,-3,-2,11,-5,-6,11,-7,-4,-10,]),',':([19,21,22,23,],[-13,-14,-15,25,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -16,7 +16,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'term':([13,23,],[18,18,]),'atomsentence':([0,1,3,10,11,12,],[7,7,7,7,7,7,]),'complexsentence':([0,1,3,10,11,12,],[2,2,2,2,2,2,]),'terms':([13,23,],[19,25,]),'sentence':([0,1,3,10,11,12,],[4,8,9,15,16,17,]),'constant':([13,23,],[21,21,]),'predicate':([0,1,3,10,11,12,],[5,5,5,5,5,5,]),}
+_lr_goto_items = {'predicate':([0,2,6,9,10,11,],[7,7,7,7,7,7,]),'sentence':([0,2,6,9,10,11,],[1,12,13,15,16,17,]),'constant':([14,25,],[19,19,]),'terms':([14,25,],[20,26,]),'complexsentence':([0,2,6,9,10,11,],[3,3,3,3,3,3,]),'statement':([0,],[4,]),'atomsentence':([0,2,6,9,10,11,],[8,8,8,8,8,8,]),'term':([14,25,],[23,23,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -25,19 +25,20 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> sentence","S'",1,None,None,None),
-  ('sentence -> atomsentence','sentence',1,'p_sentence_assign','homework3.py',52),
-  ('sentence -> complexsentence','sentence',1,'p_sentence_assign','homework3.py',53),
-  ('complexsentence -> ( sentence )','complexsentence',3,'p_complexsentence','homework3.py',57),
-  ('complexsentence -> ~ sentence','complexsentence',2,'p_complexsentence','homework3.py',58),
-  ('complexsentence -> sentence | sentence','complexsentence',3,'p_complexsentence','homework3.py',59),
-  ('complexsentence -> sentence & sentence','complexsentence',3,'p_complexsentence','homework3.py',60),
-  ('complexsentence -> sentence ENTAIL sentence','complexsentence',3,'p_complexsentence','homework3.py',61),
-  ('predicate -> NAME','predicate',1,'p_predicate','homework3.py',78),
-  ('atomsentence -> predicate ( terms )','atomsentence',4,'p_atomsentence','homework3.py',82),
-  ('terms -> term','terms',1,'p_terms','homework3.py',87),
-  ('terms -> term , terms','terms',3,'p_terms','homework3.py',88),
-  ('term -> constant','term',1,'p_term','homework3.py',94),
-  ('term -> VARIABLE','term',1,'p_term','homework3.py',95),
-  ('constant -> NAME','constant',1,'p_constant','homework3.py',102),
+  ("S' -> statement","S'",1,None,None,None),
+  ('statement -> sentence','statement',1,'p_statement','homework3.py',70),
+  ('sentence -> atomsentence','sentence',1,'p_sentence_assign','homework3.py',74),
+  ('sentence -> complexsentence','sentence',1,'p_sentence_assign','homework3.py',75),
+  ('complexsentence -> ( sentence )','complexsentence',3,'p_complexsentence','homework3.py',79),
+  ('complexsentence -> ~ sentence','complexsentence',2,'p_complexsentence','homework3.py',80),
+  ('complexsentence -> sentence | sentence','complexsentence',3,'p_complexsentence','homework3.py',81),
+  ('complexsentence -> sentence & sentence','complexsentence',3,'p_complexsentence','homework3.py',82),
+  ('complexsentence -> sentence IMPLY sentence','complexsentence',3,'p_complexsentence','homework3.py',83),
+  ('predicate -> NAME','predicate',1,'p_predicate','homework3.py',106),
+  ('atomsentence -> predicate ( terms )','atomsentence',4,'p_atomsentence','homework3.py',110),
+  ('terms -> term','terms',1,'p_terms','homework3.py',117),
+  ('terms -> term , terms','terms',3,'p_terms','homework3.py',118),
+  ('term -> constant','term',1,'p_term','homework3.py',125),
+  ('term -> VARIABLE','term',1,'p_term','homework3.py',126),
+  ('constant -> NAME','constant',1,'p_constant','homework3.py',133),
 ]
