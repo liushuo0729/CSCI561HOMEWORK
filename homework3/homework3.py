@@ -33,6 +33,28 @@ def printTree(root,layer):
     if root.right:
         printTree(root.right,layer+1)
 
+def eliminateImpl(root):
+    if root.relation == 'IMPLY':
+        root.left.flag = not root.left.flag
+        root.relation = RELATION[1]
+    if root.left:
+        eliminateImpl(root.left)
+    if root.right:
+        eliminateImpl(root.right)
+
+def moveInward(root):
+    if root.left:
+        if not root.flag:
+            root.flag = True
+            if root.relation=='OR':
+                root.relation = 'AND'
+            elif root.relation=='AND':
+                root.relation = 'OR'
+            root.left.flag = not root.left.flag
+            root.right.flag = not root.right.flag
+        moveInward(root.left)
+        moveInward(root.right)
+
 
 
 if sys.version_info[0] >= 3:  
@@ -86,6 +108,10 @@ root = TreeNode()
 def p_statement(p):
     'statement : sentence'
     root = p[1]
+    printTree(root,0)
+    eliminateImpl(root)
+    printTree(root,0)
+    moveInward(root)
     printTree(root,0)
 
 def p_sentence_assign(p):  
