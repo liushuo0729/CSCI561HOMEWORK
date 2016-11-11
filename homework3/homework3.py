@@ -21,8 +21,7 @@ RELATION = {
 
 def printTree(root,layer):
     tmp = " "*layer
-    if root.flag:
-        print (tmp+"Flag:"+str(root.flag))
+    print (tmp+"Flag:"+str(root.flag))
     if root.relation:
         print (tmp+"Relation:"+str(root.relation))
     if root.predicate:
@@ -103,8 +102,8 @@ def p_complexsentence(p):
     if p[1] == '(':
         p[0] = p[2]
     elif p[1] == '~': 
-        p[0] = p[2]
-        p[0].flag = not p[2].flag 
+        p[2].flag= not p[2].flag
+        p[0] = p[2] 
     elif p[2] == '|':
         p[0] = TreeNode()
         p[0].left = p[1]
