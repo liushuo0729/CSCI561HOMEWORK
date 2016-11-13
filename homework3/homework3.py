@@ -137,9 +137,9 @@ def p_statement(p):
     #printTree(root,0)
     global kb
     kb+=distribute(root)
-    for s in kb:
-        print ("SENTENCE-------------------")
-        printTree(s,0)
+    # for s in kb:
+    #     print ("SENTENCE-------------------")
+    #     printTree(s,0)
 
 def p_sentence_assign(p):  
     '''sentence : atomsentence
@@ -211,11 +211,24 @@ def p_error(p):
         print("Syntax error at EOF")  
    
 yacc.yacc()  
-  
-while 1:  
-    try:  
-        s = raw_input('calc > ')  
-    except EOFError:  
-        break  
-    if not s: continue  
-    yacc.parse(s)  
+
+
+read = open("input.txt")
+x = int(read.readline())
+queries = []
+for i in range(x):
+    queries.append(read.readline().rstrip('\n'))
+print (queries)
+y = int(read.readline())
+for i in range(y):
+    s = read.readline().rstrip('\n')
+    yacc.parse(s)
+for sentence in kb:
+    printTree(sentence,0)
+# while 1:  
+#     try:  
+#         s = raw_input('calc > ')  
+#     except EOFError:  
+#         break  
+#     if not s: continue  
+#     yacc.parse(s)  
