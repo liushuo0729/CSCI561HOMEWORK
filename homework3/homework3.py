@@ -74,9 +74,29 @@ def distribute(root):
                     result.append(tmp)
     return result
 
+def generateKB(root):
+    result = []
+    if not root.left:
+        result.append(root)
+    else:
+        result+=generateKB(root.left)
+        result+=generateKB(root.right)
+    return result
 
 
-
+def printKB(CNF):
+    result = ""
+    for item in CNF:
+        if not item.flag:
+            result+='~'
+        result+=item.predicate
+        result+='('
+        for parameter in item.parameter:
+            result+=parameter
+            result+=','
+        result+=')'
+        result+='|'
+    print (result)
 
 if sys.version_info[0] >= 3:  
     raw_input = input  
@@ -126,6 +146,7 @@ names = { }
 
 kb = []
 root = TreeNode()
+
 
 def p_statement(p):
     'statement : sentence'
@@ -212,6 +233,8 @@ def p_error(p):
    
 yacc.yacc()  
 
+KB = []
+hashTable = {}
 
 read = open("input.txt")
 x = int(read.readline())
@@ -224,7 +247,16 @@ for i in range(y):
     s = read.readline().rstrip('\n')
     yacc.parse(s)
 for sentence in kb:
-    printTree(sentence,0)
+    KB.append(generateKB(sentence))
+    #printTree(sentence,0)
+for i in range(len(KB)):
+    for item in KB[i]:
+        if item.predicate not in hashTable:
+            hashTable[item.predicate] = list()
+        hashTable[item.predicate].append(i)
+    printKB(KB[i])
+print (hashTable)
+
 # while 1:  
 #     try:  
 #         s = raw_input('calc > ')  
