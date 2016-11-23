@@ -12,6 +12,11 @@ class TreeNode(object):
         self.predicate = None
         self.parameter = None
 
+    def __eq__(self,other):
+        if type(other) != type(self):
+            return False
+        return self.flag == other.flag and self.predicate == other.predicate and self.parameter== other.parameter
+
 
 RELATION = {
     1:'OR',
@@ -82,6 +87,49 @@ def generateKB(root):
         result+=generateKB(root.left)
         result+=generateKB(root.right)
     return result
+
+def contradiction(target,known):
+    if target.predicate==known.predicate and (target.flag != known.flag):
+        for i in range(len(target.parameter)):
+            if (not isVariable(target.parameter[i])) and (not isVariable(known.parameter[i])):
+                if target.parameter[i] != known.parameter[i]:
+                    return False
+        return True
+    else:
+        return False
+
+
+
+def isVariable(para):
+    if len(para)==1:
+        if para>='a' and para<='z':
+            return True
+    return False
+
+
+def unification(target,known,sentence):
+    result = []
+    table = {}
+
+    for i in range(len(target.parameter)):
+        if not isVariable(target.parameter[i]) and isVariable(known.parameter[i]):
+            table[known.parameter[i]] = target.parameter[i]
+
+    for item in sentence:
+        if item!=known:
+            newItem = TreeNode()
+            newItem.flag = item.flag
+            newItem.predicate = item.predicate
+            newItem.parameter = item.parameter[:]
+            for i in range(len(newItem.parameter)):
+                if newItem.parameter[i] in table:
+                    newItem.parameter[i] = table[newItem.parameter[i]]
+            result.append(newItem)
+    return result
+
+
+
+
 
 
 def printKB(CNF):
@@ -236,12 +284,43 @@ yacc.yacc()
 KB = []
 hashTable = {}
 
+def inference(history,query):
+    global KB
+    global hashTable
+
+    if history:
+        for item in history:
+            if item==query:
+                return False
+
+    for i in hashTable[query.predicate]:
+        for item in KB[i]:
+            if contradiction(query,item):
+                newQueries = unification(query,item,KB[i])
+                if not newQueries:
+                    return True
+                else:
+                    boolean = True
+                    for newQuery in newQueries:
+                        newHistory = history
+                        newHistory.append(query)
+                        if not inference(newHistory,newQuery):
+                            boolean = False
+                            break
+                    if boolean:
+                        return True
+                break
+    return False
+
 read = open("input.txt")
+output = open("output.txt",'w')
 x = int(read.readline())
-queries = []
 for i in range(x):
-    queries.append(read.readline().rstrip('\n'))
-print (queries)
+    yacc.parse(read.readline().rstrip('\n'))
+queries = kb
+#for query in queries:
+    #printTree(query,0)
+kb = []
 y = int(read.readline())
 for i in range(y):
     s = read.readline().rstrip('\n')
@@ -254,8 +333,30 @@ for i in range(len(KB)):
         if item.predicate not in hashTable:
             hashTable[item.predicate] = list()
         hashTable[item.predicate].append(i)
-    printKB(KB[i])
-print (hashTable)
+    #printKB(KB[i])
+#print (hashTable)
+
+history = []
+
+for query in queries:
+    query.flag = not query.flag
+    if(inference(history,query)):
+        output.write("TRUE\n")
+    else:
+        output.write("FALSE\n")
+
+# history = []
+# print (history) 
+# print (inference(history,queries[1]))
+
+# for query in queries:
+#     printTree(query,0)
+#     history = []
+#     print (inference(history,query))
+#     printTree(query,0)
+#     print ('-----------------')
+
+
 
 # while 1:  
 #     try:  
